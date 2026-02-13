@@ -1,0 +1,137 @@
+/* =========================
+   ORB CORE
+========================= */
+
+.orb {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  position: relative;
+  margin: 24px auto;
+  cursor: pointer;
+
+  /* Glass look */
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 100, 200, 0.5),
+    rgba(100, 150, 255, 0.6)
+  );
+
+  backdrop-filter: blur(18px);
+  box-shadow:
+    0 0 40px rgba(255, 120, 200, 0.5),
+    inset 0 0 30px rgba(255, 255, 255, 0.5);
+
+  animation:
+    rotate 18s linear infinite,
+    float 6s ease-in-out infinite;
+
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+/* =========================
+   LIQUID SURFACE
+========================= */
+
+.orb::before,
+.orb::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  border-radius: 45%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 0, 150, 0.4),
+    rgba(0, 200, 255, 0.4),
+    rgba(255, 255, 0, 0.4),
+    rgba(255, 0, 150, 0.4)
+  );
+  animation: wave 14s linear infinite;
+  mix-blend-mode: overlay;
+}
+
+.orb::after {
+  animation-duration: 9s;
+  opacity: 0.7;
+}
+
+/* =========================
+   LISTENING MODE
+========================= */
+
+.orb.listening {
+  transform: scale(1.08);
+  box-shadow:
+    0 0 60px rgba(0, 200, 255, 0.9),
+    inset 0 0 40px rgba(255, 255, 255, 0.6);
+}
+
+.orb.listening::before {
+  animation-duration: 5s;
+}
+
+.orb.listening::after {
+  animation-duration: 3.5s;
+}
+
+/* =========================
+   SPEAKING MODE
+========================= */
+
+.orb.speaking {
+  transform: scale(1.15);
+  animation:
+    rotate 10s linear infinite,
+    pulse 1.4s ease-in-out infinite;
+  box-shadow:
+    0 0 80px rgba(255, 140, 200, 1),
+    inset 0 0 50px rgba(255, 255, 255, 0.8);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wave {
+  from {
+    transform: rotate(0deg);
+    border-radius: 42% 58% 55% 45%;
+  }
+  to {
+    transform: rotate(360deg);
+    border-radius: 58% 42% 45% 55%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
