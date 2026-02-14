@@ -6,6 +6,7 @@ function App() {
   const [listening, setListening] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const [aiText, setAiText] = useState("");
+  const [text, setText] = useState("");
 
   // ---------------- SPEAK (Text → Voice) ----------------
   const speak = (text) => {
@@ -78,15 +79,21 @@ function App() {
 
 
       try {
-        const res = await fetch("http://127.0.0.1:8000/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: userText }),
-        });
+        const res = await fetch(
+      "https://alice-backend-0vvw.onrender.com/chat",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message: userText }),
+  }
+);
 
-        const data = await res.json();
-        setAiText(data.response);
-        speak(data.response);
+    const data = await res.json();
+    setText(data.response);
+    speak(data.response);
+
       } catch (err) {
         console.error(err);
       }
